@@ -14,7 +14,7 @@ app.get('/', (req,res)=>{
 })
 
 app.get('/shelterRegister', (req,res)=>{
-    res.render('./shelters/login');
+    res.render('./shelters/register');
 })
 
 app.get('/userRegister', (req,res)=>{
@@ -23,6 +23,10 @@ app.get('/userRegister', (req,res)=>{
 
 app.get('/login', (req,res)=>{
     res.render('./users/login');
+})
+
+app.get('/post', (req,res)=>{
+    res.render('./animals/newPost');
 })
 
 app.listen(3000, ()=>{
