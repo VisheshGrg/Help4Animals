@@ -33,16 +33,24 @@
         <div class="col-md-6 offset-md-3 mb-5">
             <form action="/shelterRegister" method="POST">
                 <div class="mb-3">
-                    <label for="Username" class="form-label">Username: </label>
-                    <input type="text" class="form-control" id="Username" required>
+                    <label for="shelterName" class="form-label">Shelter name: </label>
+                    <input type="text" class="form-control" id="shelterName" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email: </label>
                     <input type="email" class="form-control" id="email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="image" class="form-label">Add profile photo: </label>
-                    <input type="file" class="form-control" id="image">
+                    <label for="mobnumber" class="form-label">Mobile Number: </label>
+                    <input class="form-control" type="tel" id="mobnumber" required>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location: </label>
+                    <textarea class="form-control" type="text" id="location" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="images" class="form-label">Shelter images: </label>
+                    <input type="file" class="form-control" id="images">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password: </label>
