@@ -13,6 +13,10 @@ app.get('/', (req,res)=>{
     res.render('home');
 })
 
+app.get('/register', (req,res)=>{
+    res.render('./users/register');
+})
+
 app.listen(3000, ()=>{
     console.log('Listening on port 3000!');
 })
