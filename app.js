@@ -13,8 +13,16 @@ app.get('/', (req,res)=>{
     res.render('home');
 })
 
-app.get('/register', (req,res)=>{
+app.get('/shelterRegister', (req,res)=>{
+    res.render('./shelters/login');
+})
+
+app.get('/userRegister', (req,res)=>{
     res.render('./users/register');
+})
+
+app.get('/login', (req,res)=>{
+    res.render('./users/login');
 })
 
 app.listen(3000, ()=>{
