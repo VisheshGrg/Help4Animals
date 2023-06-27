@@ -1,85 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help4Animals</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
+<% layout('layout/boilerplate') %>
 
-<body class="d-flex flex-column">
-    <header class="mb-auto sticky-top">
-        <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">Help4Animals</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="/">Home</a>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/userRegister">SignUp</a>
-                    <a class="nav-link" href="/logout">Logout</a>
+<div class="row mt-5">
+    <h1 class="text-center mb-3">Post about the injured animal</h1>
+    <p class="text-center mb-5">To facilitate the rescue process for the animal, kindly fill in the required details below.</p>
+    <div class="col-md-6 offset-md-3 mb-5">
+        <form action="/shelterRegister" method="POST" novalidate class="validated-form">
+            <div class="row mb-4">
+                <div class="col-5">
+                    <label for="species" class="form-label">Species</label>
+                    <input type="text" id="species" class="form-control" name="species" required>
+                    <div id="species" class="form-text">For e.g. Cow, dog etc.</div>
                 </div>
-              </div>
-            </div>  
-        </nav>
-    </header>
-
-    <div class="row mt-5">
-        <h1 class="text-center mb-3">Post about the injured animal</h1>
-        <p class="text-center mb-5">To facilitate the rescue process for the animal, kindly fill in the required details below.</p>
-        <div class="col-md-6 offset-md-3 mb-5">
-            <form action="/shelterRegister" method="POST">
-                <div class="row mb-4">
-                    <div class="col-5">
-                        <label for="species" class="form-label">Species</label>
-                        <input type="text" id="species" class="form-control" required>
-                        <div id="species" class="form-text">For e.g. Cow, dog etc.</div>
-                    </div>
-                    <div class="col-7">
-                        <label for="range" class="form-label">How much severe?</label>
-                        <input type="range" id="range" min="0" max="5" class="form-range">
-                        <div id="range" class="form-text">From less severe to highly severe (bleeding)</div>
-                    </div>
+                <div class="col-7">
+                    <label for="range" class="form-label">How much severe?</label>
+                    <input type="range" id="range" min="0" max="5" name="range" class="form-range">
+                    <div id="range" class="form-text">From less severe to highly severe (bleeding)</div>
                 </div>
-                <div class="mb-4">
-                    <label for="description" class="form-label">Describe the injury: </label>
-                    <textarea class="form-control" type="text" id="description" required></textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="locality" class="form-label">Locality: </label>
-                    <textarea class="form-control" type="text" id="locality" required></textarea>
-                    <div id="locality" class="form-text">Locality where the animal can be found when searched upon</div>
-                </div>
-                <div class="mb-4">
-                    <label for="mobnumber" class="form-label">Mobile Number: </label>
-                    <input class="form-control" type="tel" id="mobnumber" required>
-                    <div id="mobnumber" class="form-text">Just to ensure we have the necessary information of the animal. This will allow us to reach out if any additional information is required. Rest assured, we value your privacy and will handle your information with utmost confidentiality.</div>
-                </div>
-                <div class="mb-4">
-                    <label for="images" class="form-label">Add images: </label>
-                    <input type="file" class="form-control" id="images">
-                </div>
-                <div class="mb-4">
-                    <label for="identification" class="form-label">Specific identification: </label>
-                    <input type="text" class="form-control" id="identification">
-                    <div id="locality" class="form-text">Any identification of the animal for e.g. any mark, colour etc.</div>
-                </div>
-                <div class="mb-4 text-center">
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="mb-4">
+                <label for="description" class="form-label">Describe the injury: </label>
+                <textarea class="form-control" type="text" id="description" name="description" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="locality" class="form-label">Locality: </label>
+                <textarea class="form-control" type="text" id="locality" name="locality" required></textarea>
+                <div id="locality" class="form-text">Locality where the animal can be found when searched upon</div>
+            </div>
+            <div class="mb-4">
+                <label for="mobnumber" class="form-label">Mobile Number: </label>
+                <input class="form-control" type="tel" id="mobnumber" name="mobnumber" required>
+                <div id="mobnumber" class="form-text">Just to ensure we have the necessary information of the animal. This will allow us to reach out if any additional information is required. Rest assured, we value your privacy and will handle your information with utmost confidentiality.</div>
+            </div>
+            <div class="mb-4">
+                <label for="images" class="form-label">Add images: </label>
+                <input type="file" class="form-control" name="images" id="images">
+            </div>
+            <div class="mb-4">
+                <label for="identification" class="form-label">Specific identification: </label>
+                <input type="text" class="form-control" name="identification" id="identification">
+                <div id="locality" class="form-text">Any identification of the animal for e.g. any mark, colour etc.</div>
+            </div>
+            <div class="mb-4 text-center">
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </div>
-
-    <footer class="mt-auto bg-dark text-white-50">
-        <p>&copy; 2023 Help4Animals</p>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>
