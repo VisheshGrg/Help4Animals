@@ -3,17 +3,16 @@ const passportLocalMongoose=require('passport-local-mongoose');
 const Schema=mongoose.Schema;
 
 const UserSchema = new Schema({
-    name: {
+    username: {
         type: String,
         required: true,
-        unique: false
     },
     email: {
         type: String,
         required: true,
         unique: true
-    }
+    },
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
 module.exports=mongoose.model('User', UserSchema);

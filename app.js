@@ -15,6 +15,9 @@ const dbUrl='mongodb://127.0.0.1:27017/Help4Animals';
 const flash=require('connect-flash');
 const passport=require('passport');
 const LocalStrategy=require('passport-local');
+const helmet=require('helmet');
+const catchAsync = require('./utils/catchAsync.js');
+const method_override=require('method-override');
 
 mongoose.set('strictQuery',false);
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -54,17 +57,35 @@ app.engine('ejs', ejsmate);
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}));
+app.use(method_override('_method'));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(
     mongoSanitize({
         replaceWith: '_',
     }),
 )
+app.use(express.json());
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(helmet({contentSecurityPolicy: false, crossOriginEmbedderPolicy: false}));
+
+passport.use(new LocalStrategy({
+    usernameField: 'email'
+}, (email,password,done) => {
+    User.findOne({email: email}, (err,user) => {
+        if(err) {return done(err);}
+        if(!user) {
+            return done(null,false,{message: 'Incorrect mail'});
+        }
+        if(!user.validPassword(password)){
+            return done(null,false,{message: 'Incorrect password'})
+        }
+        return done(null,user);
+    });
+}), User.authenticate());
+
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -83,20 +104,19 @@ app.get('/shelterRegister', (req,res)=>{
     res.render('./shelters/register');
 });
 
-app.post('/shelterRegister',upload.array('images'), async(req,res,next)=>{
+app.post('/shelterRegister',upload.array('images'), catchAsync(async(req,res,next)=>{
     const shelter = new Shelter(req.body.shelter);
     shelter.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-    // console.log(req.user);
     shelter.owner=req.user._id;
     await shelter.save();
     res.redirect('/');
-});
+}));
 
 app.get('/userRegister', (req,res)=>{
     res.render('./users/register');
 });
 
-app.post('/userRegister', async(req,res)=>{
+app.post('/userRegister', catchAsync(async(req,res)=>{
     try{
         const {username,email,password,confPassword} = req.body;
         const user = new User({username,email});
@@ -105,29 +125,36 @@ app.post('/userRegister', async(req,res)=>{
             if(err){return next(err);}
             req.flash('success', 'Thanks for connecting with us!');
             res.redirect('/');
-        })
+        });
     }
     catch(e){
         req.flash('error', e.message);
         res.render('./users/register');
     }
-});
+}));
 
 app.get('/login', (req,res)=>{
     res.render('./users/login');
 });
 
-app.post('/login', (req,res)=>{
+app.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login', keepSessionInfo: true}), async(req,res)=>{
+    const {email,password} = req.body;
+    console.log(email);
+    req.flash('success', 'Welcome back!');
     res.redirect('/');
-})
+});
 
 app.get('/post', (req,res)=>{
     res.render('./animals/newPost');
 });
 
 app.get('/logout', (req,res)=>{
-    
-})
+    req.logout(function(err){
+        if(err) {return next(err);}
+        req.flash('success', "Thanks for visiting!");
+        res.redirect('/');
+    })
+});
 
 app.all('*', (req,res,next)=>{
     next(new ExpressError('Page not found!', 404));

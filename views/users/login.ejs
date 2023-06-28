@@ -10,14 +10,20 @@
                     <form action="/login" method="POST" novalidate class="validated-form">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email: </label>
-                            <input type="email" class="form-control" id="email" autofocus required>
+                            <input type="email" class="form-control" id="email" name="email" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password: </label>
-                            <input type="password" class="form-control" id="password" required>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary col-12">Login</button>
+                            <button class="btn btn-primary col-12">Login</button>
                         </div>
                     </form>
                 </div>
