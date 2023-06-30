@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+}
+
 const express=require("express");
 const app=express();
 const path=require('path');
@@ -8,7 +12,8 @@ const User=require('./models/users');
 const Shelter=require('./models/shelters');
 const ExpressError=require('./utils/ExpressError');
 const multer=require('multer');
-const upload=multer({dest: 'upload/' });
+const {storage}=require('./cloudinary');
+const upload=multer({storage});
 const session=require('express-session');
 const MongoStore=require('connect-mongo');
 const dbUrl='mongodb://127.0.0.1:27017/Help4Animals';
@@ -165,7 +170,7 @@ app.post('/shelterRegister',upload.array('images'), catchAsync(async(req,res,nex
             const shelter=new Shelter({sheltername: sheltername,email:email,contact:mobnumber,location:location,description:description,password:hash});
             const user=new User({username:sheltername,email:email,password:hash});
             shelter.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-            shelter.owner=req.session.user._id;
+            shelter.owner=req.session.user;
             await shelter.save();
             await user.save();
             req.flash('success', 'Successfully made a new shelter!');
@@ -173,6 +178,11 @@ app.post('/shelterRegister',upload.array('images'), catchAsync(async(req,res,nex
         })
     }
 }));
+
+app.get('/shelters', async(req,res)=>{
+    const shelters=await Shelter.find({});
+    res.render('./shelters/index', {shelters});
+})
 
 app.get('/post', (req,res)=>{
     res.render('./animals/newPost');
