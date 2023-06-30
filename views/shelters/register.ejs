@@ -6,31 +6,37 @@
         <form action="/shelterRegister" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="shelterName" class="form-label">Shelter name: </label>
-                <input type="text" class="form-control" id="shelterName" name="shelter[sheltername]" required>
+                <input type="text" class="form-control" id="shelterName" name="sheltername" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email: </label>
-                <input type="email" class="form-control" id="email" name="shelter[email]" required>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div id="email" class="form-text"><i>(any email linked with the shelter)</i></div>
             </div>
             <div class="mb-3">
                 <label for="mobnumber" class="form-label">Mobile Number: </label>
-                <input class="form-control" type="tel" id="mobnumber" name="shelter[mobnumber]" required>
+                <input class="form-control" type="tel" id="mobnumber" name="mobnumber" required>
             </div>
             <div class="mb-3">
                 <label for="location" class="form-label">Location: </label>
-                <textarea class="form-control" type="text" id="location" name="shelter[location]" required></textarea>
+                <textarea class="form-control" type="text" id="location" name="location" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="images" class="form-label">Shelter images: </label>
                 <input type="file" class="form-control" name="images" id="images" multiple>
             </div>
             <div class="mb-3">
+                <label for="description" class="form-label">Description: </label>
+                <textarea class="form-control" type="text" id="description" name="description"></textarea>
+                <div id="description" class="form-text"><i>(optional)</i></div>
+            </div>
+            <div class="mb-3">
                 <label for="password" class="form-label">Password: </label>
-                <input type="password" class="form-control" id="password" name="shelter[password]" required>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="mb-3">
                 <label for="confPassword" class="form-label">Confirm password: </label>
-                <input type="password" class="form-control" id="confPassword" required>
+                <input type="password" class="form-control" id="confPassword" name="confPassword" required>
             </div>
             <div class="mb-3 text-center">
                 <button class="btn btn-primary">Register</button>

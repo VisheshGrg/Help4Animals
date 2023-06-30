@@ -13,11 +13,11 @@ const session=require('express-session');
 const MongoStore=require('connect-mongo');
 const dbUrl='mongodb://127.0.0.1:27017/Help4Animals';
 const flash=require('connect-flash');
-const passport=require('passport');
-const LocalStrategy=require('passport-local');
 const helmet=require('helmet');
 const catchAsync = require('./utils/catchAsync.js');
 const method_override=require('method-override');
+const bcrypt=require('bcrypt');
+const {isLoggedIn} = require('./middleware.js');
 
 mongoose.set('strictQuery',false);
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -64,33 +64,15 @@ app.use(
         replaceWith: '_',
     }),
 )
-app.use(express.json());
 app.use(session(sessionConfig));
 app.use(flash());
 app.use(helmet({contentSecurityPolicy: false, crossOriginEmbedderPolicy: false}));
 
-passport.use(new LocalStrategy({
-    usernameField: 'email'
-}, (email,password,done) => {
-    User.findOne({email: email}, (err,user) => {
-        if(err) {return done(err);}
-        if(!user) {
-            return done(null,false,{message: 'Incorrect mail'});
-        }
-        if(!user.validPassword(password)){
-            return done(null,false,{message: 'Incorrect password'})
-        }
-        return done(null,user);
-    });
-}), User.authenticate());
-
-app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 app.use((req,res,next)=>{
-    res.locals.currentUser = req.user;
+    if(!['/login','/','/userRegister'].includes(req.originalUrl)){
+        req.session.returnToPath=req.originalUrl;
+    }
+    res.locals.currentUser = req.session.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -100,36 +82,30 @@ app.get('/', (req,res)=>{
     res.render('home');
 });
 
-app.get('/shelterRegister', (req,res)=>{
-    res.render('./shelters/register');
-});
-
-app.post('/shelterRegister',upload.array('images'), catchAsync(async(req,res,next)=>{
-    const shelter = new Shelter(req.body.shelter);
-    shelter.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-    shelter.owner=req.user._id;
-    await shelter.save();
-    res.redirect('/');
-}));
-
 app.get('/userRegister', (req,res)=>{
     res.render('./users/register');
 });
 
 app.post('/userRegister', catchAsync(async(req,res)=>{
-    try{
-        const {username,email,password,confPassword} = req.body;
-        const user = new User({username,email});
-        const registeredUser=await User.register(user,password);
-        req.login(registeredUser, err=>{
-            if(err){return next(err);}
-            req.flash('success', 'Thanks for connecting with us!');
+    const {username,email,password,confPassword} = req.body;
+    const findUser = await User.findOne({email: email});
+    if(findUser){
+        req.flash('error', 'Invalid email!');
+        res.redirect('/userRegister');
+    }
+    else if(password!==confPassword){
+        req.flash('error', 'Password must be same!');
+        res.redirect('/userRegister');
+    }
+    else{
+        bcrypt.hash(password,12, async(err,hash)=>{
+            if(err) {return next(err);}
+            const user = new User({username: username, email: email, password: hash});
+            await user.save();
+            req.session.user=user._id;
+            req.flash('success','Welcome! Thankyou for connecting with us.');
             res.redirect('/');
         });
-    }
-    catch(e){
-        req.flash('error', e.message);
-        res.render('./users/register');
     }
 }));
 
@@ -137,23 +113,69 @@ app.get('/login', (req,res)=>{
     res.render('./users/login');
 });
 
-app.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login', keepSessionInfo: true}), async(req,res)=>{
-    const {email,password} = req.body;
-    console.log(email);
-    req.flash('success', 'Welcome back!');
-    res.redirect('/');
-});
-
-app.get('/post', (req,res)=>{
-    res.render('./animals/newPost');
+app.post('/login', async(req,res)=>{
+    try{
+        const {email,password} = req.body;
+        const user = await User.findOne({email: email});
+        const validPassword = await bcrypt.compare(password,user.password);
+        if(!validPassword){
+            req.flash('error', 'Invalid entry! Try again.');
+            res.redirect('/login');
+        }
+        else{
+            req.flash('success', 'Welcome back!');
+            req.session.user=user._id;
+            let redirectPath = req.session.returnToPath || '/';
+            delete req.session.returnToPath;
+            res.redirect(redirectPath);
+        }
+    }
+    catch(err){
+        req.flash('error', 'Invalid entry! Try again.');
+        res.redirect('/login');
+    }
 });
 
 app.get('/logout', (req,res)=>{
-    req.logout(function(err){
-        if(err) {return next(err);}
-        req.flash('success', "Thanks for visiting!");
-        res.redirect('/');
-    })
+    req.session.user=null;
+    req.session.returnToPath=null;
+    // req.session.destroy();
+    req.flash('success', 'Goodbye! Thankyou for visiting.');
+    res.redirect('/');
+});
+
+app.get('/shelterRegister', isLoggedIn, (req,res)=>{
+    res.render('./shelters/register');
+});
+
+app.post('/shelterRegister',upload.array('images'), catchAsync(async(req,res,next)=>{
+    const {sheltername,email,mobnumber,location,description,password,confPassword} = req.body;
+    const findUser = await User.findOne({email: email});
+    if(findUser){
+        req.flash('error', 'Invalid email! (shelter must have its own email)');
+        res.redirect('/shelterRegister');
+    }
+    else if(password!=confPassword){
+        req.flash('error','Password must be same!');
+        res.redirect('/shelterRegister');
+    }
+    else{
+        bcrypt.hash(password,12, async(err,hash)=>{
+            if(err) { return next(err);}
+            const shelter=new Shelter({sheltername: sheltername,email:email,contact:mobnumber,location:location,description:description,password:hash});
+            const user=new User({username:sheltername,email:email,password:hash});
+            shelter.images = req.files.map(f => ({url: f.path, filename: f.filename}));
+            shelter.owner=req.session.user._id;
+            await shelter.save();
+            await user.save();
+            req.flash('success', 'Successfully made a new shelter!');
+            res.redirect('/');
+        })
+    }
+}));
+
+app.get('/post', (req,res)=>{
+    res.render('./animals/newPost');
 });
 
 app.all('*', (req,res,next)=>{

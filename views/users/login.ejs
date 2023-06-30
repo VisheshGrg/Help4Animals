@@ -1,9 +1,9 @@
 <% layout('layout/boilerplate') %>
 
-<div class="container d-flex justify-content-center align-items-center mb-5">
+<div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
     <div class="row">
         <div class="col-md-10 offset-md-1">
-            <div class="card shadow">
+            <div class="card shadow" style="height: auto;">
                 <img src="https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWFsJTIwY2FyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="shelter image" class="card-img-top">
                 <div class="card-body">
                     <h4 class="card-title">Login</h4>
@@ -11,16 +11,11 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email: </label>
                             <input type="email" class="form-control" id="email" name="email" autofocus required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password: </label>
+                        <label for="password" class="form-label">Password: </label>
+                        <div class="input-group mb-3">
                             <input type="password" class="form-control" id="password" name="password" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
+                            <i class="bi bi-eye-slash input-group-text" id="togglePassword" style="cursor: pointer;"></i>
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary col-12">Login</button>

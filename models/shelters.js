@@ -11,11 +11,12 @@ ImageSchema.virtual('thumbnail').get(function(){
 })
 
 const ShelterSchema = new Schema({
-    shelterName: String,
+    sheltername: String,
     email: String,
     contact: String,
     location: String,
     images: [ImageSchema],
+    description: String,
     password: String,
     owner :{
         type: Schema.Types.ObjectId,

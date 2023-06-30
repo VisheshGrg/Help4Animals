@@ -25,6 +25,10 @@ const joi = BaseJoi.extend(extension);
 
 module.exports.shelterSchema = joi.object({
     shelter: joi.object({
-        shelterName: joi.string().required().escapeHTML(),
-    })
-})
+        sheltername: joi.string().required().escapeHTML(),
+        email: joi.string().required().escapeHTML(),
+        contact: joi.string().required().escapeHTML(),
+        location: joi.string().required().escapeHTML(),
+        description: joi.string().escapeHTML()
+    }).required()
+});
