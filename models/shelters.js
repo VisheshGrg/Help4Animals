@@ -21,7 +21,13 @@ const ShelterSchema = new Schema({
     owner :{
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    reviews:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
 
 module.exports = mongoose.model('Shelter', ShelterSchema);
