@@ -22,9 +22,9 @@ module.exports.createShelter = async(req,res,next)=>{
         bcrypt.hash(password,12, async(err,hash)=>{
             if(err) { return next(err);}
             const shelter=new Shelter({sheltername: sheltername,email:email,contact:mobnumber,location:location,description:description,password:hash});
-            const user=new User({username:sheltername,email:email,password:hash});
             shelter.images = req.files.map(f => ({url: f.path, filename: f.filename}));
             shelter.owner=req.session.user;
+            const user=new User({username:sheltername,email:email,password:hash});
             await shelter.save();
             await user.save();
             req.flash('success', 'Successfully made a new shelter!');
@@ -52,4 +52,16 @@ module.exports.showShelter = async(req,res,next) => {
     }
     const curUser=await User.findById(res.locals.currentUser);
     res.render('./shelters/show', {shelter,curUser});
+};
+
+module.exports.deleteShelter = async (req,res,next)=>{
+    const {id} = req.params;
+    const shelter=await Shelter.findById(id);
+    const user=await User.findOne({email: shelter.email});
+    await Shelter.findByIdAndDelete(id);
+    await User.findByIdAndDelete(user._id);
+    req.session.user=null;
+    req.session.returnToPath=null;
+    req.flash('success', "Successfuly deleted the shelter!");
+    res.redirect('/');
 };

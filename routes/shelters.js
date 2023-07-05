@@ -6,7 +6,7 @@ const Shelter=require('../models/shelters');
 const multer=require('multer');
 const {storage}=require('../cloudinary');
 const upload=multer({storage});
-const {isLoggedIn} = require('../middleware.js');
+const {isLoggedIn, isAuthor, isShelter} = require('../middleware.js');
 
 router.get('/',catchAsync(shelters.index));
 
@@ -16,5 +16,6 @@ router.route('/register')
 
 router.route('/:id')
     .get(catchAsync(shelters.showShelter))
+    .delete(isLoggedIn, isAuthor, isShelter, catchAsync(shelters.deleteShelter));
 
 module.exports = router;

@@ -70,7 +70,7 @@ app.use(flash());
 app.use(helmet({contentSecurityPolicy: false, crossOriginEmbedderPolicy: false}));
 
 app.use((req,res,next)=>{
-    if(!['/login','/','/userRegister'].includes(req.originalUrl)){
+    if(!['/login','/userRegister'].includes(req.originalUrl)){
         req.session.returnToPath=req.originalUrl;
     }
     res.locals.currentUser = req.session.user;
