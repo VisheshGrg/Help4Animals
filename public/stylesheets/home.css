@@ -79,6 +79,58 @@ footer > p{
     color: white;
 }
 
+.shelterCount{
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url("https://images.unsplash.com/photo-1504006833117-8886a355efbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fGJhY2tncm91bmQlMjBpbWFnZXMlMjBhbmltYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text{
+    font-size: 4rem;
+    font-weight: 500;
+    color: #ced4da;
+}
+
+.count{
+    font-size: 3rem;
+    background-color: gray;
+    padding: 20px 120px;
+    border-radius: 20px;
+    color: #184e77;
+    font-weight: 600;
+}
+
+.count::after{
+    content: "";
+    width: 4px;
+    height: 34px;
+    background-color: #184e77;
+    display: inline-block;
+}
+
+@keyframes cursor-blink {
+    0% {
+        opacity: 0;
+    }
+}
+
+.count::after {
+    animation: cursor-blink 1.5s steps(2) infinite;
+}
+
 @media only screen and (max-width: 775px){
     .row{
         display: flex;

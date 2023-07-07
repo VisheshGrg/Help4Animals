@@ -11,3 +11,11 @@ module.exports.createReview = async(req,res,next) => {
     req.flash('success','Made a new review!');
     res.redirect(`/shelters/${shelter._id}`);
 };
+
+module.exports.deleteReview = async(req,res,next) => {
+    const {id,reviewId} = req.params;
+    await Shelter.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    req.flash('success', 'Deleted a review!');
+    res.redirect(`/shelters/${id}`);
+}

@@ -87,8 +87,9 @@ app.use(async (req,res,next)=>{
     next();
 });
 
-app.get('/', (req,res)=>{
-    res.render('home');
+app.get('/', async(req,res)=>{
+    const count=await Shelter.estimatedDocumentCount();
+    res.render('home',{count});
 });
 
 app.use('/',userRoute);

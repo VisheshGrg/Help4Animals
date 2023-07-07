@@ -2,6 +2,7 @@ const {shelterSchema} = require('./validateSchema.js');
 const ExpressError=require('./utils/ExpressError.js');
 const User=require('./models/users.js');
 const Shelter=require('./models/shelters.js');
+const Review=require('./models/reviews.js');
 
 module.exports.isLoggedIn = (req,res,next)=>{
     if(!req.session.user){
@@ -32,3 +33,22 @@ module.exports.isShelter = async (req,res,next)=>{
     next();
 }
 
+module.exports.isReview = async(req,res,next)=>{
+    const {reviewId}=req.params;
+    const review=await Review.findById(reviewId);
+    if(!review){
+        req.flash('error',"Review not found!");
+        return res.redirect('/');
+    }
+    next();
+}
+
+module.exports.isReviewAuthor = async(req,res,next)=>{
+    const {id,reviewId}=req.params;
+    const review=await Review.findById(reviewId);
+    if(!res.locals.currentUser===review.author._id){
+        req.flash('error', 'You don\'t have permission to do that!');
+        return res.redirect(`/shelter/${id}`);
+    }
+    next();
+}
