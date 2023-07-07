@@ -75,6 +75,10 @@ footer > p{
     padding-top: 8px;
 }
 
+.white-color{
+    color: white;
+}
+
 @media only screen and (max-width: 775px){
     .row{
         display: flex;

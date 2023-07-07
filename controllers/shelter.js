@@ -54,6 +54,38 @@ module.exports.showShelter = async(req,res,next) => {
     res.render('./shelters/show', {shelter,curUser});
 };
 
+module.exports.editShelter = async (req,res,next) => {
+    const {id}=req.params;
+    const shelter = await Shelter.findById(id);
+    if(!shelter){
+        req.flash('error','Shelter not found!');
+        res.redirect('/');
+    }
+    res.render('shelters/edit',{shelter});
+}
+
+module.exports.updateCampground = async (req,res,next) => {
+    const {id} = req.params;
+    const shel = await Shelter.findById(id);
+    const oldEmail=shel.email;
+    const newEmail=req.body.shelter.email;
+    const shelter = await Shelter.findByIdAndUpdate(id, {...req.body.shelter});
+    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    shelter.images.push(...imgs);
+    const user=await User.findOne({email: oldEmail});
+    await shelter.save();
+    user.email=newEmail;
+    await user.save();
+    if(req.body.deleteImages){
+        for(let filename of req.body.deleteImages){
+            await cloudinary.uploader.destroy(filename);
+        }
+        await shelter.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}});
+    }
+    req.flash('success',"Successfully updated!");
+    res.redirect(`/shelters/${shelter._id}`);
+}
+
 module.exports.deleteShelter = async (req,res,next)=>{
     const {id} = req.params;
     const shelter=await Shelter.findById(id);

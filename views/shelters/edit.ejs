@@ -1,0 +1,48 @@
+<% layout('layout/boilerplate') %>
+
+<div class="row mt-5">
+    <h1 class="text-center">Edit Shelter</h1>
+    <div class="col-md-6 offset-md-3 mb-5">
+        <form action="/shelters/<%= shelter._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="shelterName" class="form-label">Shelter name: </label>
+                <input type="text" class="form-control" id="shelterName" name="shelter[sheltername]" value="<%= shelter.sheltername %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email: </label>
+                <input type="email" class="form-control" id="email" name="shelter[email]" value="<%= shelter.email %>" required>
+                <div id="email" class="form-text"><i>(only email linked with the shelter)</i></div>
+            </div>
+            <div class="mb-3">
+                <label for="mobnumber" class="form-label">Mobile Number: </label>
+                <input class="form-control" type="text" id="mobnumber" name="shelter[mobnumber]" value="<%= shelter.contact %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location: </label>
+                <textarea class="form-control" type="text" id="location" name="shelter[location]" required><%= shelter.location %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Add images: </label>
+                <input type="file" class="form-control" name="images" id="images" multiple>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description: </label>
+                <textarea class="form-control" type="text" id="description" name="shelter[description]"><%= shelter.description %></textarea>
+                <div id="description" class="form-text"><i>(optional)</i></div>
+            </div>
+            <div class="mb-3">
+                <% shelter.images.forEach(function(img,i){ %>
+                    <img src="<%= img.thumbnail %>" alt="shelter" class="img-thumbnail">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                    </div>
+                    <label for="image">Delete?</label>
+                <% }) %>
+            </div>
+            <div class="mb-3 text-center">
+                <button class="btn btn-primary">Edit Shelter</button>
+            </div>
+        </form>
+        <a href="/shelters/<%= shelter._id %>">Cancel</a>
+    </div>
+</div>

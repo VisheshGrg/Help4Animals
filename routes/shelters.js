@@ -14,8 +14,11 @@ router.route('/register')
     .get(isLoggedIn, shelters.renderRegister)
     .post(upload.array('images'), catchAsync(shelters.createShelter));
 
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(shelters.editShelter));
+
 router.route('/:id')
     .get(catchAsync(shelters.showShelter))
+    .put(isLoggedIn,isAuthor,isShelter, upload.array('images'), catchAsync(shelters.updateCampground))
     .delete(isLoggedIn, isAuthor, isShelter, catchAsync(shelters.deleteShelter));
 
 module.exports = router;

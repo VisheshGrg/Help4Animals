@@ -19,6 +19,8 @@ const flash=require('connect-flash');
 const helmet=require('helmet');
 const catchAsync = require('./utils/catchAsync.js');
 const method_override=require('method-override');
+const User=require('./models/users');
+const Shelter=require('./models/shelters');
 
 mongoose.set('strictQuery',false);
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -69,11 +71,17 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(helmet({contentSecurityPolicy: false, crossOriginEmbedderPolicy: false}));
 
-app.use((req,res,next)=>{
+app.use(async (req,res,next)=>{
     if(!['/login','/userRegister'].includes(req.originalUrl)){
         req.session.returnToPath=req.originalUrl;
     }
+    const user=await User.findById(req.session.user);
+    let shelter=null;
+    if(user){
+        shelter=await Shelter.findOne({email: user.email});
+    }
     res.locals.currentUser = req.session.user;
+    res.locals.isShelter = shelter;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();

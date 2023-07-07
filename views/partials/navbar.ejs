@@ -13,12 +13,15 @@
               <a class="nav-link" href="/">What we do?</a>
             </div>
             <div class="navbar-nav ms-auto">
-                <% if(!currentUser) {%>
-                  <a class="nav-link" href="/login">Login</a>
-                  <a class="nav-link" href="/userRegister">SignUp</a>
-                <% } else {%>
+              <% if(!currentUser) {%>
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/userRegister">SignUp</a>
+              <% } else {%>
                   <a class="nav-link" href="/logout">Logout</a>
-                <% } %>
+                  <% if(isShelter) {%>
+                      <a class="nav-link" href="/shelters/<%= isShelter._id %>"><span class="bi bi-person"></span></a>
+                  <% } %>
+              <% } %>
             </div>
           </div>
         </div>  
