@@ -33,6 +33,8 @@
                         <a class="nav-link" href="/logout">Logout</a>
                         <% if(isShelter) {%>
                             <a class="nav-link" href="/shelters/<%= isShelter._id %>"><span class="bi bi-person"></span></a>
+                        <% }else { %>
+                            <a class="nav-link" href="/profile/<%= currentUser %>"><span class="bi bi-person"></span></a>
                         <% } %>
                     <% } %>
                 </div>

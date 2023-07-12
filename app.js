@@ -75,12 +75,12 @@ app.use(async (req,res,next)=>{
     if(!['/login','/userRegister'].includes(req.originalUrl)){
         req.session.returnToPath=req.originalUrl;
     }
+    res.locals.currentUser = req.session.user;
     const user=await User.findById(req.session.user);
     let shelter=null;
     if(user){
         shelter=await Shelter.findOne({email: user.email});
     }
-    res.locals.currentUser = req.session.user;
     res.locals.isShelter = shelter;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');

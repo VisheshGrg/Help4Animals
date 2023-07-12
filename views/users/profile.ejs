@@ -1,0 +1,39 @@
+<% layout('layout/boilerplate') %>
+
+<div class="container">
+    <div style="margin-bottom: 40px;">
+        <h1><%= user.username %></h1>
+        <p><%= user.email %></p>
+    </div>
+    <h4>Your Shelters</h4>
+    <div class="border border-dark" style="padding: 20px;">
+        <% for(let shelter of userShelters) {%>
+            <div class="card mb-5" style="height: auto">
+                <div class="row">
+                    <div class="col-md-4">
+                        <% if(shelter.images.length>=1){ %>
+                            <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= shelter.images[0].url %>" alt="shelter image">
+                        <% } else { %>
+                            <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
+                        <% } %>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h3 class="card-title" style="margin-bottom: 15px;"><%= shelter.sheltername %></h5>
+                            <p class="card-text">
+                                <small class="text-muted"><%= shelter.location %></small>
+                            </p>
+                            <% if(shelter.description){ %>
+                                <p class="card-text"><%= shelter.description %></p>
+                            <% } %>
+                            <p class="card-text">
+                                <small class="text-muted"><%= shelter.contact %></small>
+                            </p>
+                            <a class="btn btn-primary" href="/shelters/<%= shelter._id %>">View <%= shelter.sheltername %></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>

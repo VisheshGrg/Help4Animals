@@ -15,4 +15,6 @@ router.route('/login')
 
 router.get('/logout', users.logoutUser);
 
+router.get('/profile/:id', users.userProfile);
+
 module.exports = router;

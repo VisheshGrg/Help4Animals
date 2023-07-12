@@ -97,3 +97,7 @@ module.exports.deleteShelter = async (req,res,next)=>{
     req.flash('success', "Successfuly deleted the shelter!");
     res.redirect('/');
 };
+
+module.exports.renderDonate = async (req,res,next)=>{
+    res.send('Available soon!')
+}

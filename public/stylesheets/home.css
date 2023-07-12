@@ -106,10 +106,10 @@ footer > p{
 
 .count{
     font-size: 3rem;
-    background-color: gray;
+    background-color: rgba(234, 172, 139, 0.5);
     padding: 20px 120px;
     border-radius: 20px;
-    color: #184e77;
+    color: white;
     font-weight: 600;
 }
 
@@ -117,7 +117,7 @@ footer > p{
     content: "";
     width: 4px;
     height: 34px;
-    background-color: #184e77;
+    background-color: white;
     display: inline-block;
 }
 
