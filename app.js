@@ -11,6 +11,7 @@ const mongoSanitize=require('express-mongo-sanitize');
 const userRoute=require('./routes/users');
 const shelterRoute=require('./routes/shelters');
 const reviewRoute=require('./routes/reviews');
+const rescueRoute=require('./routes/rescue');
 const ExpressError=require('./utils/ExpressError');
 const session=require('express-session');
 const MongoStore=require('connect-mongo');
@@ -95,10 +96,7 @@ app.get('/', async(req,res)=>{
 app.use('/',userRoute);
 app.use('/shelters',shelterRoute);
 app.use('/shelters/:id/reviews', reviewRoute);
-
-app.get('/post', (req,res)=>{
-    res.render('./animals/newPost');
-});
+app.use('/rescue',rescueRoute);
 
 app.all('*', (req,res,next)=>{
     next(new ExpressError('Page not found!', 404));

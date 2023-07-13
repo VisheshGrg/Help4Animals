@@ -1,5 +1,6 @@
 const User=require('../models/users');
 const Shelter=require('../models/shelters');
+const Rescue=require('../models/rescue');
 const bcrypt=require('bcrypt');
 
 module.exports.renderRegister = (req,res)=>{
@@ -68,6 +69,8 @@ module.exports.userProfile = async(req,res,next)=>{
     const {id} = req.params;
     const user = await User.findById(id);
     const shelters=await Shelter.find({});
+    const rescues=await Rescue.find({});
     const userShelters = shelters.filter((e) => e.owner==req.session.user);
-    res.render('./users/profile', {user,userShelters});
+    const userRescues = rescues.filter((e) => e.caller==req.session.user);
+    res.render('./users/profile', {user,userShelters,userRescues});
 }

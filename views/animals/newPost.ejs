@@ -4,7 +4,7 @@
     <h1 class="text-center mb-3">Post about the injured animal</h1>
     <p class="text-center mb-5">To facilitate the rescue process for the animal, kindly fill in the required details below.</p>
     <div class="col-md-6 offset-md-3 mb-5">
-        <form action="/shelterRegister" method="POST" novalidate class="validated-form">
+        <form action="/rescue/post" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="row mb-4">
                 <div class="col-5">
                     <label for="species" class="form-label">Species</label>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-7">
                     <label for="range" class="form-label">How much severe?</label>
-                    <input type="range" id="range" min="0" max="5" name="range" class="form-range">
+                    <input type="range" id="range" min="0" max="5" name="severe" class="form-range">
                     <div id="range" class="form-text">From less severe to highly severe (bleeding)</div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
             </div>
             <div class="mb-4">
                 <label for="mobnumber" class="form-label">Mobile Number: </label>
-                <input class="form-control" type="tel" id="mobnumber" name="mobnumber" required>
+                <input class="form-control" type="tel" id="mobnumber" name="callerContact" required>
                 <div id="mobnumber" class="form-text">Just to ensure we have the necessary information of the animal. This will allow us to reach out if any additional information is required. Rest assured, we value your privacy and will handle your information with utmost confidentiality.</div>
             </div>
             <div class="mb-4">
