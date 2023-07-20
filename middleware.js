@@ -3,6 +3,7 @@ const ExpressError=require('./utils/ExpressError.js');
 const User=require('./models/users.js');
 const Shelter=require('./models/shelters.js');
 const Review=require('./models/reviews.js');
+const Rescue=require('./models/rescue.js')
 
 module.exports.isLoggedIn = (req,res,next)=>{
     if(!req.session.user){
@@ -49,6 +50,27 @@ module.exports.isReviewAuthor = async(req,res,next)=>{
     if(!res.locals.currentUser===review.author._id){
         req.flash('error', 'You don\'t have permission to do that!');
         return res.redirect(`/shelter/${id}`);
+    }
+    next();
+}
+
+module.exports.isUserNotShelter = async(req,res,next)=>{
+    const {id} = req.params;
+    const user=await User.findById(res.locals.currentUser);
+    const shelter=await Shelter.findOne({email: user.email});
+    if(shelter){
+        req.flash('error','You don\'t have permission to do that!');
+        return res.redirect('/');
+    }
+    next();
+}
+
+module.exports.isRescueAuthor = async(req,res,next)=>{
+    const {id} = req.params;
+    const rescue=await Rescue.findById(id);
+    if(!res.locals.currentUser===rescue.caller._id){
+        req.flash('error','You don\'t have permission to do that!');
+        return req.redirect('/');
     }
     next();
 }

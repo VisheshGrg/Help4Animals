@@ -3,7 +3,7 @@
 <h1 style="margin-bottom: 30px;">All Shelters</h1>
 
 <% for(let shelter of shelters){ %>
-    <div class="card mb-5" style="height: auto">
+    <div class="card mb-5" style="height: auto;">
         <div class="row">
             <div class="col-md-4">
                 <% if(shelter.images.length>=1){ %>
@@ -14,18 +14,24 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h3 class="card-title" style="margin-bottom: 15px;"><%= shelter.sheltername %></h5>
-                    <p class="card-text">
-                        <small class="text-muted"><%= shelter.location %></small>
-                    </p>
-                    <% if(shelter.description){ %>
-                        <p class="card-text"><%= shelter.description %></p>
-                    <% } %>
-                    <p class="card-text">
-                        <small class="text-muted"><%= shelter.contact %></small>
-                    </p>
-                    <a class="btn btn-primary" href="/shelters/<%= shelter._id %>">View <%= shelter.sheltername %></a>
-                    <a class="btn btn-success" href="/shelters/<%= shelter._id %>/donate">Donate</a>
+                    <div class="card-header" style="margin-bottom: 10px;">
+                        <h3 class="card-title" style="margin-bottom: 10px;"><%= shelter.sheltername %></h5>
+                        <p class="card-text">
+                            <small class="text-muted"><%= shelter.location %></small>
+                        </p>
+                    </div>
+                    <div class="card-text" style="padding-left: 15px;">
+                        <% if(shelter.description){ %>
+                            <p class="card-text"><%= shelter.description %></p>
+                        <% } %>
+                        <p class="card-text">
+                            <small class="text-muted"><%= shelter.contact %></small>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="/shelters/<%= shelter._id %>">View <%= shelter.sheltername %></a>
+                        <a class="btn btn-success" href="/shelters/<%= shelter._id %>/donate">Donate</a>
+                    </div>
                 </div>
             </div>
         </div>

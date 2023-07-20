@@ -1,0 +1,57 @@
+<% layout('layout/boilerplate') %>
+
+<div class="row mt-5">
+    <h1 class="text-center mb-3">Edit your submission</h1>
+    <div class="col-md-6 offset-md-3 mb-5">
+        <form action="/rescue/<%= rescue._id %>/edit?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+            <div class="row mb-4">
+                <div class="col-5">
+                    <label for="species" class="form-label">Species</label>
+                    <input type="text" id="species" class="form-control" name="rescue[species]" value="<%= rescue.species %>" required>
+                    <div id="species" class="form-text">For e.g. Cow, dog etc.</div>
+                </div>
+                <div class="col-7">
+                    <label for="range" class="form-label">How much severe?</label>
+                    <input type="range" id="range" min="0" max="5" name="rescue[severe]" class="form-range" value="<%= rescue.severe %>">
+                    <div id="range" class="form-text">From less severe to highly severe (bleeding)</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="description" class="form-label">Describe the injury: </label>
+                <textarea class="form-control" type="text" id="description" name="rescue[description]" required><%= rescue.description %></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="locality" class="form-label">Locality: </label>
+                <textarea class="form-control" type="text" id="locality" name="rescue[locality]" required><%= rescue.locality %></textarea>
+                <div id="locality" class="form-text">Locality where the animal can be found when searched upon</div>
+            </div>
+            <div class="mb-4">
+                <label for="mobnumber" class="form-label">Mobile Number: </label>
+                <input class="form-control" type="tel" id="mobnumber" name="rescue[callerContact]" value="<%= rescue.callerContact %>" required>
+                <div id="mobnumber" class="form-text">Just to ensure we have the necessary information of the animal. This will allow us to reach out if any additional information is required. Rest assured, we value your privacy and will handle your information with utmost confidentiality.</div>
+            </div>
+            <div class="mb-4">
+                <label for="images" class="form-label">Add images: </label>
+                <input type="file" class="form-control" name="images" id="images">
+            </div>
+            <div class="mb-4">
+                <label for="identification" class="form-label">Specific identification: </label>
+                <input type="text" class="form-control" name="rescue[identification]" id="identification" value="<%= rescue.identification %>">
+                <div id="locality" class="form-text">Any identification of the animal for e.g. any mark, colour etc.</div>
+            </div>
+            <div class="mb-3">
+                <% rescue.images.forEach(function(img,i){ %>
+                    <img src="<%= img.thumbnail %>" alt="animal" class="img-thumbnail">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                    </div>
+                    <label for="image">Delete?</label>
+                <% }) %>
+            </div>
+            <div class="mb-4 text-center">
+                <button class="btn btn-primary">Edit submission</button>
+            </div>
+        </form>
+        <a href="/profile/<%= currentUser %>">Cancel</a>
+    </div>
+</div>
