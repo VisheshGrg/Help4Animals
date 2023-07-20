@@ -46,6 +46,12 @@ module.exports.updateRescue = async(req,res) => {
     res.redirect(`/profile/${req.session.user}`);
 }
 
+module.exports.rescueDetails = async(req,res) => {
+    const {id} = req.   params;
+    const rescue = await Rescue.findById(id);
+    res.render(`./animals/details`, {rescue});
+}
+
 module.exports.deleteRescue = async(req,res) => {
     const {id} = req.params;
     await Rescue.findByIdAndDelete(id);

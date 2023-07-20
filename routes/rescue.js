@@ -19,6 +19,8 @@ router.route('/:id/edit')
     .get(isLoggedIn,isUserNotShelter, catchAsync(rescues.editRescue))
     .put(isLoggedIn,isUserNotShelter,upload.array('images'),catchAsync(rescues.updateRescue));
 
+router.get('/:id/details', isLoggedIn, catchAsync(rescues.rescueDetails));
+
 router.delete('/:id/delete', isLoggedIn,isUserNotShelter,catchAsync(rescues.deleteRescue));
 
 module.exports = router;
