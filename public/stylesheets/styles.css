@@ -86,3 +86,76 @@
     justify-content: center;
     align-items: center;
 }
+
+.check-form{
+    line-height: 1.5;
+    border: 2px solid #adb5bd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.checkLabel{
+    display: inline;
+    font-size: 1rem;
+}
+
+#confirmBox.hidden{
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+#confirmBox{
+    opacity: 1;
+    height: auto;
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.countRescues{
+    height: auto;
+    max-width: 100%;
+    padding: 70px;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url("../images/turtle.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.countRescues-title{
+    font-size: 80px;
+    color: #fb8500;
+}
+
+.shelter-rescues{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.shelter-rescue-details{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    border: 2px solid slategray;
+    padding: 10px;
+}
+
+.show-species, .show-location{
+    margin-bottom: 0px;
+}
+
+.show-button{
+    text-decoration: none;
+}

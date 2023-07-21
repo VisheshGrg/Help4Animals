@@ -29,18 +29,15 @@
                                 <small class="text-muted"><%= rescue.locality %></small>
                             </p>
                             <p><%= rescue.description %></p>
-                            <p>
+                            <!-- <p>
                                 <i>Identification: <%= rescue.identification %></i>
-                            </p>
-                            <p>
+                            </p> -->
+                            <!-- <p>
                                 <small>Caller contact: <%= rescue.callerContact %></small>
-                            </p>
+                            </p> -->
                         </div>
                         <div class="card-footer" style="width: 100%;">
-                            <% if(rescue.active) {%>
-                                <a class="btn btn-danger" href="#">Rescue Animal</a>
-                            <% } %>
-                            <a class="btn btn-success" href="/rescue/<%= rescue._id %>/details">View details</a>
+                            <a class="btn btn-secondary" href="/rescue/<%= rescue._id %>/details">View details</a>
                         </div>
                     </div>
                 </div>

@@ -65,6 +65,16 @@ module.exports.isUserNotShelter = async(req,res,next)=>{
     next();
 }
 
+module.exports.isLoggedInAsShelter = async(req,res,next)=>{
+    const user=await User.findById(req.session.user);
+    const shelter = await Shelter.findOne({email: user.email});
+    if(!shelter){
+        req.flash('error', 'You don\'t have permission to do that!');
+        return res.redirect('/');s
+    }
+    next();
+}
+
 module.exports.isRescueAuthor = async(req,res,next)=>{
     const {id} = req.params;
     const rescue=await Rescue.findById(id);

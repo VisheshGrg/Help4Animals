@@ -1,5 +1,7 @@
 const {cloudinary} = require('../cloudinary');
 const Rescue=require('../models/rescue');
+const User=require('../models/users');
+const Shelter=require('../models/shelters');
 
 module.exports.renderRescue = (req,res)=>{
     res.render('./animals/newPost');
@@ -16,7 +18,12 @@ module.exports.addRescue = async(req,res,next)=>{
 }
 
 module.exports.showRescues = async(req,res) => {
-    const rescues=await Rescue.find({});
+    let rescues=await Rescue.find({});
+
+    rescues = rescues.filter((obj) => {
+        return obj.active==true;
+    });
+    rescues.sort(function(a,b) {return b.severe-a.severe});
     res.render('./animals/index', {rescues});
 }
 
@@ -47,9 +54,25 @@ module.exports.updateRescue = async(req,res) => {
 }
 
 module.exports.rescueDetails = async(req,res) => {
-    const {id} = req.   params;
+    const {id} = req.params;
     const rescue = await Rescue.findById(id);
     res.render(`./animals/details`, {rescue});
+}
+
+module.exports.confirmRescue = async(req,res) => {
+    const {id} = req.params;
+    const rescue = await Rescue.findById(id);
+    if(!rescue){
+        req.flash('error', 'Sorry! This id doesn\'t exist!');
+        res.redirect('/rescue/animals');
+    }
+    const user=await User.findById(req.session.user);
+    const shelter=await Shelter.findOne({email: user.email});
+    rescue.rescueShelter = shelter._id;
+    rescue.active=false;
+    await rescue.save();
+    req.flash('success', 'Rescue confirmed!');
+    res.redirect('/rescue/animals');
 }
 
 module.exports.deleteRescue = async(req,res) => {

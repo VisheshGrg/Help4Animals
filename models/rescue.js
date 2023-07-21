@@ -22,6 +22,10 @@ const RescueSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    rescueShelter: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shelter'
+    },
     active: {
         type: Boolean,
         default: true

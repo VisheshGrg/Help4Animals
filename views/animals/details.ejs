@@ -19,10 +19,18 @@
             <p class="callercontact dark-grey font-small">Caller contact: <%= rescue.callerContact %></p>
             <div class="links">
                 <% if(rescue.active) {%>
-                    <a class="btn btn-danger" href="#">Rescue Animal</a>
+                    <a class="btn btn-danger" id="toggle">Rescue Animal</a>
+                    <div class="check-form hidden" id="confirmBox">
+                        <form action="/rescue/<%= rescue._id %>/confirmRescue" novalidate>
+                            <input type="checkbox" id="isSure" name="isSure" value="yes">
+                            <label class="dark-grey checkLabel" for="isSure">Are you sure? After submitting, it is your responsibilty to rescue the animal on time and take proper care!</label>
+                            <button class="btn btn-sm btn-success" id="submitButton" style="display: block;" disabled>Confirm Rescue</button>
+                        </form> 
+                    </div>
                 <% } %>
+
             </div>
-            <a class="back dark-grey font-small" href="/rescue/animals"><i class="bi bi-arrow-left"></i> Go back</a>
+            <a class="back font-small" href="/rescue/animals"><i class="bi bi-arrow-left"></i> Go back</a>
         </div>
         <div class="col-lg-6 image-details">
             <div id="rescueCarousel" class="carousel slide" data-bs-ride="carousel">

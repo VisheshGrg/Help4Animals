@@ -1,6 +1,7 @@
 const {cloudinary} = require('../cloudinary');
 const Shelter = require('../models/shelters');
 const User=require('../models/users');
+const Rescue=require('../models/rescue');
 const bcrypt=require('bcrypt');
 
 module.exports.renderRegister = (req,res)=>{
@@ -50,8 +51,11 @@ module.exports.showShelter = async(req,res,next) => {
         req.flash('error','Shelter not found!');
         res.redirect('/shelters');
     }
+    const rescues=await Rescue.find({});
+    const shelterRescues = rescues.filter((e) => e.rescueShelter==id);
+    const countRescues = shelterRescues.length;
     const curUser=await User.findById(res.locals.currentUser);
-    res.render('./shelters/show', {shelter,curUser});
+    res.render('./shelters/show', {shelter,curUser,shelterRescues,countRescues});
 };
 
 module.exports.editShelter = async (req,res,next) => {
