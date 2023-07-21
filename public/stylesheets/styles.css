@@ -159,3 +159,8 @@
 .show-button{
     text-decoration: none;
 }
+
+#hide{
+    cursor: pointer;
+    color: blue;
+}

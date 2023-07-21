@@ -1,6 +1,6 @@
 <% layout('layout/boilerplate') %>
 
-<div class="container">
+<div class="container mt-5 mb-5">
     <div style="margin-bottom: 40px; border-bottom: 1px solid grey;">
         <h1><%= user.username %></h1>
         <p><%= user.email %></p>
@@ -45,40 +45,83 @@
 
     <h4 style="margin-top: 50px; margin-bottom: 20px; color: slategray;">Your submissions for injured animals</h4>
     <div class="border border-dark" style="padding: 20px; display: flex; flex-direction: column; align-items: center;  border-radius: 10px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-        <% for(let rescue of userRescues) {%>
-            <div class="card mb-5" style="height: auto; width: 1000px; text-align: center;">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <% if(rescue.images.length>=1){ %>
-                            <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= rescue.images[0].url %>" alt="animal">
-                        <% } else { %>
-                            <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
-                        <% } %>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="card-body" style="height: 100%;">
-                            <div class="card-header">
-                                <h3 class="card-title" style="margin-bottom: 15px; display: inline; margin-right: 10px;">Species: <%= rescue.species %></h5>
-                                <% if(rescue.active){ %>
-                                    <span class="btn btn-sm btn-danger" style="display: inline;">Active</span>        
-                                <% } else {%>
-                                    <span class="btn btn-sm btn-success" style="display: inline;">Rescued</span>
+        <% for(const [i,rescue] of userRescues.entries()) {%>
+            <% if(i<2) {%>
+                <div class="card mb-5" style="height: auto; width: 1000px; text-align: center;">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <% if(rescue.images.length>=1){ %>
+                                <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= rescue.images[0].url %>" alt="animal">
+                            <% } else { %>
+                                <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
+                            <% } %>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body" style="height: 100%;">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="margin-bottom: 15px; display: inline; margin-right: 10px;">Species: <%= rescue.species %></h5>
+                                    <% if(rescue.active){ %>
+                                        <span class="btn btn-sm btn-danger" style="display: inline;">Active</span>        
+                                    <% } else {%>
+                                        <span class="btn btn-sm btn-success" style="display: inline;">Rescued</span>
+                                    <% } %>
+                                </div>
+                                <p class="card-text" style="margin-top: 10px;">
+                                    <small class="text-muted"><%= rescue.locality %></small>
+                                </p>
+                                <p class="card-text"><%= rescue.description %></p>
+                                <% if(rescue.active) {%>
+                                    <div class="card-footer" style="width: 100%;">
+                                        <a class="btn btn-success" href="/rescue/<%= rescue._id %>/edit ">Edit details</a>
+                                        <form style="display: inline;" action="/rescue/<%= rescue._id %>/delete?_method=DELETE" method="POST">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
                                 <% } %>
-                            </div>
-                            <p class="card-text" style="margin-top: 10px;">
-                                <small class="text-muted"><%= rescue.locality %></small>
-                            </p>
-                            <p class="card-text"><%= rescue.description %></p>
-                            <div class="card-footer" style="width: 100%;">
-                                <a class="btn btn-success" href="/rescue/<%= rescue._id %>/edit ">Edit details</a>
-                                <form style="display: inline;" action="/rescue/<%= rescue._id %>/delete?_method=DELETE" method="POST">
-                                    <button class="btn btn-danger">Delete</button>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <% }else {%>
+                <div class="card mb-5" id="hideElement" style="height: auto; width: 1000px; text-align: center; display: none;">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <% if(rescue.images.length>=1){ %>
+                                <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= rescue.images[0].url %>" alt="animal">
+                            <% } else { %>
+                                <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
+                            <% } %>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body" style="height: 100%;">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="margin-bottom: 15px; display: inline; margin-right: 10px;">Species: <%= rescue.species %></h5>
+                                    <% if(rescue.active){ %>
+                                        <span class="btn btn-sm btn-danger" style="display: inline;">Active</span>        
+                                    <% } else {%>
+                                        <span class="btn btn-sm btn-success" style="display: inline;">Rescued</span>
+                                    <% } %>
+                                </div>
+                                <p class="card-text" style="margin-top: 10px;">
+                                    <small class="text-muted"><%= rescue.locality %></small>
+                                </p>
+                                <p class="card-text"><%= rescue.description %></p>
+                                <% if(rescue.active) {%>
+                                    <div class="card-footer" style="width: 100%;">
+                                        <a class="btn btn-success" href="/rescue/<%= rescue._id %>/edit ">Edit details</a>
+                                        <form style="display: inline;" action="/rescue/<%= rescue._id %>/delete?_method=DELETE" method="POST">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+        <% if(userRescues.length > 2) {%>
+            <a id="hide">See more</a>
         <% } %>
     </div>
 </div>
