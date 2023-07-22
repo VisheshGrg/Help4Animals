@@ -113,12 +113,25 @@
         <i class="bi bi-arrow-down" style="color: white;"></i>
     </div>
     <div class="shelter-rescues">
-        <% for(let rescue of shelterRescues) {%>
-            <div class="shelter-rescue-details">
-                <p class="show-species"><%= rescue.species %></p> 
-                <p class="show-location"><%= rescue.locality %></p> 
-                <a class="show-button" href="/rescue/<%= rescue._id %>/details">View details</a>
-            </div>
+        <% for(const [i,rescue] of shelterRescues.entries()) {%>
+            <% if(i<5) {%>
+                <div class="shelter-rescue-details row">
+                    <p class="show-index col-md-3"><%= i+1 %>.</p>
+                    <p class="show-species col-md-3"><%= rescue.species %></p> 
+                    <p class="show-location col-md-3"><%= rescue.locality %></p> 
+                    <a class="show-button col-md-3" href="/rescue/<%= rescue._id %>/details">View details</a>
+                </div>
+            <% }else {%>
+                <div class="shelter-rescue-details row" style="display: none;">
+                    <p class="show-index col-md-3"><%= i+1 %>.</p>
+                    <p class="show-species col-md-3"><%= rescue.species %></p> 
+                    <p class="show-location col-md-3"><%= rescue.locality %></p> 
+                    <a class="show-button col-md-3" href="/rescue/<%= rescue._id %>/details">View details</a>
+                </div>
+            <% } %>
+        <% } %>
+        <% if(shelterRescues.length>5) {%>
+            <a id="hide-show">See more</a>
         <% } %>
     </div>
 </div>

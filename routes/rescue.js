@@ -10,8 +10,8 @@ const {isLoggedIn,isUserNotShelter, isLoggedInAsShelter} = require('../middlewar
 const rescue = require('../models/rescue');
 
 router.route('/post')
-    .get(isLoggedIn,rescues.renderRescue)
-    .post(isLoggedIn,upload.array('images'), catchAsync(rescues.addRescue));
+    .get(isLoggedIn,isUserNotShelter,rescues.renderRescue)
+    .post(isLoggedIn,isUserNotShelter,upload.array('images'), catchAsync(rescues.addRescue));
 
 router.get('/animals', rescues.showRescues);
 
