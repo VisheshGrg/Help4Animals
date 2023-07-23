@@ -70,8 +70,8 @@
                 <% }else {%>
                     <div class="col-md-7 card-content home-card-content">
                         <div class="card-body content-items">
-                            <h3 class="card-title">See all injured animals to rescue</h5>
-                            <p class="card-text">Please click the link below to contact us if you come across an injured animal. Kindly provide necessary details, and we will promptly send help. For emergencies, please contact us using the helpline number provided above.</p>
+                            <h3 class="card-title">See all Injured Animals to Rescue</h5>
+                            <p class="card-text">See all the injured animals posted by the users. View the details mentioned there, see images and be ready to make a big difference in the lives of the animals.</p>
                             <a class="btn btn-primary" href="/rescue/animals">See animals</a>
                         </div>
                     </div>
@@ -81,13 +81,23 @@
     
         <div class="card col-shelters">
             <div class="row g-0 card-right">
-                <div class="col-md-7 card-content">
-                    <div class="card-body content-items">
-                        <h3 class="card-title">Register a shelter</h5>
-                        <p class="card-text">If you own a shelter, join our community and make a difference by helping us rescue and find homes for as many animals as possible. Click the link below to register your shelter and become a valued member of our cause!</p>
-                        <a class="btn btn-primary" href="/shelters/register">Register</a>
+                <% if(!isShelter) {%>
+                    <div class="col-md-7 card-content">
+                        <div class="card-body content-items">
+                            <h3 class="card-title">Register a shelter</h5>
+                            <p class="card-text">If you own a shelter, join our community and make a difference by helping us rescue and find homes for as many animals as possible. Click the link below to register your shelter and become a valued member of our cause!</p>
+                            <a class="btn btn-primary" href="/shelters/register">Register</a>
+                        </div>
                     </div>
-                </div>
+                <% }else {%>
+                    <div class="col-md-7 card-content">
+                        <div class="card-body content-items">
+                            <h3 class="card-title">Post for Adoption</h5>
+                            <p class="card-text">If an animal is completely recovered to its complete health and is completely fit to be adopted by someone then post it here and give the animal a new life and a new home!</p>
+                            <a class="btn btn-primary" href="/adoptions/post">Post here</a>
+                        </div>
+                    </div>
+                <% } %>
                 <div class="col-md-5">
                     <img class="img-fluid rounded-start img-home" src="https://plus.unsplash.com/premium_photo-1663126271177-1f07f9593b5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YW5pbWFsJTIwY29tbXVuaXR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="shleter image">
                 </div>
