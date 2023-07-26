@@ -20,7 +20,8 @@ const AdoptionSchema = new Schema({
     rescueShelter: {
         type: Schema.Types.ObjectId,
         ref: 'Shelter'
-    }
+    },
+    location: String
 });
 
 module.exports = mongoose.model('Adoptions', AdoptionSchema);

@@ -168,3 +168,71 @@
     cursor: pointer;
     color: blue;
 }
+
+.adoption-image{
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("../images/dog-adoption.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.adoption-image > h1{
+    font-size: 4rem;
+    color: #dee2e6;
+}
+
+.cont-adoptions-index{
+    padding: 30px;
+    display: flex;
+    flex-direction: row;    
+}
+
+.all-adoptions{
+    margin: 20px;
+    width: 1050px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+
+.adoption-item{
+    width: 300px;
+    height: auto;
+    margin: 15px;
+    transition: 0.4s;
+}
+
+.adoption-item:hover{
+    cursor: pointer;
+    width: 310px;
+}
+
+.adoption-body{
+    padding: 10px;
+}
+
+.adoption-text{
+    display: flex;
+    justify-content: space-between;
+    color: #495057;
+    margin-bottom: 0px;
+}
+
+.adoptions-filter{
+    padding: 20px;
+    margin: 20px;
+    width: 380px;
+    height: 100%;
+    text-align: center;
+    border: 2px solid slategray;
+    background-color:antiquewhite;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

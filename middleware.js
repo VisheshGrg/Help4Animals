@@ -70,7 +70,7 @@ module.exports.isLoggedInAsShelter = async(req,res,next)=>{
     const shelter = await Shelter.findOne({email: user.email});
     if(!shelter){
         req.flash('error', 'You don\'t have permission to do that!');
-        return res.redirect('/');s
+        return res.redirect('/');
     }
     next();
 }

@@ -12,6 +12,7 @@ const userRoute=require('./routes/users');
 const shelterRoute=require('./routes/shelters');
 const reviewRoute=require('./routes/reviews');
 const rescueRoute=require('./routes/rescue');
+const adoptionRoute=require('./routes/adoption');
 const ExpressError=require('./utils/ExpressError');
 const session=require('express-session');
 const MongoStore=require('connect-mongo');
@@ -97,6 +98,7 @@ app.use('/',userRoute);
 app.use('/shelters',shelterRoute);
 app.use('/shelters/:id/reviews', reviewRoute);
 app.use('/rescue',rescueRoute);
+app.use('/adoptions', adoptionRoute);
 
 app.all('*', (req,res,next)=>{
     next(new ExpressError('Page not found!', 404));
