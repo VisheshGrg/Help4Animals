@@ -31,7 +31,7 @@ module.exports.filterAdoptions = async(req,res)=>{
     let {species,gender,age,location} = req.body;
     const allAdoptions = await Adoption.find({});
     const filterArr = (e) =>{
-        if(species!=null){
+        if(species!="all" && species!=null){
             let spc = species.toLowerCase();
             spc=spc.charAt(0).toUpperCase()+spc.slice(1);
             if(e.species!=spc){
@@ -41,11 +41,17 @@ module.exports.filterAdoptions = async(req,res)=>{
         if(gender && e.gender!=gender){
             return false;
         }
-        if(age && e.age!=age){
+        if(age!="0" && e.age!=age){
             return false;
         }
+        if(location!="all" && location!=null){
+            let loc=e.location.toLowerCase();
+            if(loc.indexOf(location.toLowerCase())==-1){
+                return false;
+            }
+        }
         return true;
-    } 
+    };
     const adoptions = allAdoptions.filter((e) => filterArr(e));
     if(!species){
         species="all";
@@ -58,4 +64,12 @@ module.exports.filterAdoptions = async(req,res)=>{
     }
     const values=[species,gender,location,age];
     res.render('./adoptions/index', {adoptions,values}); 
+}
+
+module.exports.viewDetails = async(req,res)=>{
+    const {id} = req.params;
+    const adoption = await Adoption.findById(id);
+    const user=await User.findById(adoption.rescueShelter);
+    const shelter = await Shelter.findOne({email: user.email});
+    res.render('./adoptions/show', {adoption, shelter});
 }

@@ -1,0 +1,33 @@
+<% layout('layout/boilerplate') %>
+
+<div class="adoptions-show">
+    <div class="adoptions-show-details row">
+        <div class="col-6">
+            <div class="adopt-show-header">
+                <h1>Species: <%= adoption.species %> (<%= adoption.name %>)</h1>
+                <p><%= adoption.location %></p>
+            </div>
+            <div class="adopt-show-details">
+                <p>Age: <%= adoption.age %> yrs</p>
+                <p>Gender: <%= adoption.gender %></p>
+                <p><%= adoption.details %></p>
+            </div>
+            <div class="adopt-show-shelter">
+                <p>Rescued by shelter: <%= shelter.sheltername %></p>
+                <p>Contact: <%= shelter.contact %></p>
+            </div>
+            <div class="adopt-show-buttons">
+                <a class="btn btn-sm btn-primary" href="/shelters/<%= shelter._id %>">View <%= shelter.sheltername %></a>
+                <% if(adoption.rescueShelter==currentUser) {%>
+                    <a class="btn btn-sm btn-primary" href="#">Edit details</a>
+                    <a class="btn btn-sm btn-danger" href="#">Delete</a>
+                <% } %>
+            </div>
+        </div>  
+        <div class="adopt-show-images col-6">
+            <% for(let img of adoption.images) {%>
+                <img class="adopt-show-img" src="<%= img.url %>" alt="animal">
+            <% } %>
+        </div>
+    </div>
+</div>

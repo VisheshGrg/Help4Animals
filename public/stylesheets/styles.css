@@ -236,3 +236,54 @@
     background-color:antiquewhite;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+.adoptions-show{
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+    url("../images/adopt.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+}
+
+.adopt-show-header{
+    color: #e9ecef;
+    margin-bottom: 50px;
+}
+
+.adopt-show-header > p{
+    font-size: 1.1rem;
+    color: #adb5bd;
+}
+
+.adopt-show-details{
+    color: #6c757d;
+    font-size: 1.3rem;
+    margin-bottom: 50px;
+}
+
+.adopt-show-shelter{
+    color: #adb5bd;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+}
+
+.adopt-show-images{
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.adopt-show-img{
+    width: 200px;
+    margin: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.adopt-show-img:hover{
+    width: 300px;
+}

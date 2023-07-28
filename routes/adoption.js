@@ -17,4 +17,6 @@ router.route('/index')
 
 router.post('/filter', isLoggedIn, catchAsync(adoptions.filterAdoptions));
 
+router.get('/:id', isLoggedIn, catchAsync(adoptions.viewDetails));
+
 module.exports = router;
