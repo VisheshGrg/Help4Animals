@@ -73,3 +73,38 @@ module.exports.viewDetails = async(req,res)=>{
     const shelter = await Shelter.findOne({email: user.email});
     res.render('./adoptions/show', {adoption, shelter});
 }
+
+module.exports.editDetails = async(req,res)=>{
+    const {id} = req.params;
+    const adoption = await Adoption.findById(id);
+    if(adoption.rescueShelter!=req.session.user){
+        req.flash('error', 'You are not allowed to do that!');
+        res.redirect('/');
+    }
+    else{
+        res.render('./adoptions/edit', {adoption});
+    }
+}
+
+module.exports.updateDetails = async(req,res)=>{
+    const {id} = req.params;
+    const adoption = await Adoption.findByIdAndUpdate(id,{...req.body.adoption});
+    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    adoption.images.push(...imgs);
+    await adoption.save();
+    if(req.body.deleteImages){
+        for(let filename of req.body.deleteImages){
+            await cloudinary.uploader.destroy(filename);
+        }
+        await adoption.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}});
+    }
+    req.flash('success', 'Successfully updated details!');
+    res.redirect(`/adoptions/${adoption._id}`);
+}
+
+module.exports.deleteAdoption = async(req,res)=>{
+    const {id} = req.params;
+    await Adoption.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted your submission!');
+    res.redirect('/adoptions/index');
+}

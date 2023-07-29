@@ -36,8 +36,29 @@ module.exports.createShelter = async(req,res,next)=>{
 
 module.exports.index = async(req,res)=>{
     const shelters=await Shelter.find({});
-    res.render('./shelters/index', {shelters});
+    const location="";
+    res.render('./shelters/index', {shelters,location});
 };
+
+module.exports.filterShelters = async(req,res) => {
+    const {location} = req.body;
+    if(!location){
+        res.redirect('/shelters');
+    }
+    else{
+        const filterArray = (e) => {
+            let loc=e.location.toLowerCase();
+            if(loc.indexOf(location.toLowerCase())==-1){
+                return false;
+            }
+            return true;
+        }
+    
+        const allShelters = await Shelter.find({});
+        const shelters = allShelters.filter((e) => filterArray(e));
+        res.render('./shelters/index', {shelters,location});
+    }
+}
 
 module.exports.showShelter = async(req,res,next) => {
     const {id}=req.params;

@@ -8,7 +8,9 @@ const {storage}=require('../cloudinary');
 const upload=multer({storage});
 const {isLoggedIn, isAuthor, isShelter} = require('../middleware.js');
     
-router.get('/',catchAsync(shelters.index));
+router.route('/')
+    .get(catchAsync(shelters.index))
+    .post(catchAsync(shelters.filterShelters));
 
 router.route('/register')
     .get(isLoggedIn, shelters.renderRegister)

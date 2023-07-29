@@ -19,8 +19,10 @@
             <div class="adopt-show-buttons">
                 <a class="btn btn-sm btn-primary" href="/shelters/<%= shelter._id %>">View <%= shelter.sheltername %></a>
                 <% if(adoption.rescueShelter==currentUser) {%>
-                    <a class="btn btn-sm btn-primary" href="#">Edit details</a>
-                    <a class="btn btn-sm btn-danger" href="#">Delete</a>
+                    <a class="btn btn-sm btn-success" href="/adoptions/<%= adoption._id %>/edit">Edit details</a>
+                    <form class="d-inline" action="/adoptions/<%= adoption.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
                 <% } %>
             </div>
         </div>  

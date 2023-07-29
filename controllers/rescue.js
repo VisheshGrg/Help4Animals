@@ -24,7 +24,32 @@ module.exports.showRescues = async(req,res) => {
         return obj.active==true;
     });
     rescues.sort(function(a,b) {return b.severe-a.severe});
-    res.render('./animals/index', {rescues});
+    const location="";
+    res.render('./animals/index', {rescues,location});
+}
+
+module.exports.filterRescues = async(req,res) => {
+    const {location} = req.body;
+    if(!location){
+        res.redirect('/rescue/animals');
+    }
+    else{
+        const filterArray = (e) => {
+            let loc=e.locality.toLowerCase();
+            if(loc.indexOf(location.toLowerCase())==-1){
+                return false;
+            }
+            return true;
+        }
+    
+        const allRescues = await Rescue.find({});
+        let rescues = allRescues.filter((e) => filterArray(e));
+        rescues = rescues.filter((e) => {
+            return e.active==true;
+        });
+        rescues.sort(function(a,b) {return b.severe-a.severe});
+        res.render('./animals/index', {rescues,location});
+    }
 }
 
 module.exports.editRescue = async(req,res) => {

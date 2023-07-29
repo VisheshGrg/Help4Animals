@@ -239,8 +239,9 @@
 
 .adoptions-show{
     height: 100vh;
-    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-    url("../images/adopt.jpg");
+    max-height: auto;
+    background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.8)),
+    url("../images/adopt.avif");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -285,5 +286,5 @@
 }
 
 .adopt-show-img:hover{
-    width: 300px;
+    transform: scale(1.5,1.5);
 }

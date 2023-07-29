@@ -1,0 +1,57 @@
+<% layout('layout/boilerplate') %>
+
+<div class="row mt-5">
+    <h1 class="text-center mb-3">Edit details</h1>
+    <div class="col-md-6 offset-md-3 mb-5">
+        <form action="/adoptions/<%= adoption._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="species" class="form-label">Species</label>
+                <input type="text" id="species" class="form-control" name="adoption[species]" value="<%= adoption.species %>" required>
+                <div id="species" class="form-text">For e.g. Cow, dog etc.</div>
+            </div>
+            <div class="mb-4">
+                <label for="age" class="form-label">Age: </label>
+                <input type="number" id="age" min="0" max="100" name="adoption[age]" value="<%= adoption.age %>" required>
+            </div>
+            <div class="mb-4">
+                <label for="name" class="form-label">Name of animal (if any)</label>
+                <input class="form-control" type="text" id="name" name="adoption[name]" value="<%= adoption.name %>"></input>
+            </div>
+            <div class="mb-4">
+                <label for="details" class="form-label">Details: </label>
+                <textarea class="form-control" type="text" id="details" name="adoption[details]" required><%= adoption.details %></textarea>
+                <div id="details" class="form-text">Enter any details related to the animal such as habits, injury (when rescued), breed (if any) etc.</div>
+            </div>
+            <div class="mb-4">
+                <label for="gender" class="form-label">Gender: </label>
+                <select name="adoption[gender]" id="gender" required>
+                    <option value="" disabled>Gender</option>
+                    <% if(adoption.gender==="Male") {%>
+                        <option value="Male" selected>Male</option>
+                        <option value="Male">Female</option>
+                    <% }else {%>
+                        <option value="Male">Male</option>
+                        <option value="Female" selected>Female</option>
+                    <%  }%>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="images" class="form-label">Add images: </label>
+                <input type="file" class="form-control" name="images" id="images" multiple>
+            </div>
+            <div class="mb-3">
+                <% adoption.images.forEach(function(img,i){ %>
+                    <img src="<%= img.thumbnail %>" alt="animal" class="img-thumbnail">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                    </div>
+                    <label for="image">Delete?</label>
+                <% }) %>
+            </div>
+            <div class="mb-4 text-center">
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        <a class="btn btn-sm btn-danger" href="/adoptions/<%= adoption._id %>">Cancel</a>
+    </div>
+</div>

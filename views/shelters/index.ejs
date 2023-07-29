@@ -3,6 +3,14 @@
 
 <div class="container mt-5 mb-5">
     <h1 style="margin-bottom: 30px;">All Shelters</h1>
+
+    <form action="/shelters" method="POST" class="mb-5">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Location</span>
+            <input type="text" class="form-control" placeholder="Enter location to search..." aria-label="Username" aria-describedby="basic-addon1" name="location" value="<%= location ? location:"" %>">
+            <button class="btn btn-sm btn-secondary">Filter</button>
+        </div>
+    </form>
     
     <% for(let shelter of shelters){ %>
         <div class="card mb-5" style="height: auto;">

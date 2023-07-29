@@ -13,7 +13,9 @@ router.route('/post')
     .get(isLoggedIn,isUserNotShelter,rescues.renderRescue)
     .post(isLoggedIn,isUserNotShelter,upload.array('images'), catchAsync(rescues.addRescue));
 
-router.get('/animals', rescues.showRescues);
+router.route('/animals')
+    .get(catchAsync(rescues.showRescues))
+    .post(catchAsync(rescues.filterRescues));
 
 router.route('/:id/edit')
     .get(isLoggedIn,isUserNotShelter, catchAsync(rescues.editRescue))

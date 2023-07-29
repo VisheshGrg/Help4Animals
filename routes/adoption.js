@@ -17,6 +17,11 @@ router.route('/index')
 
 router.post('/filter', isLoggedIn, catchAsync(adoptions.filterAdoptions));
 
-router.get('/:id', isLoggedIn, catchAsync(adoptions.viewDetails));
+router.get('/:id/edit', isLoggedIn,isLoggedInAsShelter, catchAsync(adoptions.editDetails));
+
+router.route('/:id')
+    .get(isLoggedIn, catchAsync(adoptions.viewDetails))
+    .put(isLoggedIn, isLoggedInAsShelter, upload.array('images'), catchAsync(adoptions.updateDetails))
+    .delete(isLoggedIn,isLoggedInAsShelter, catchAsync(adoptions.deleteAdoption));
 
 module.exports = router;
