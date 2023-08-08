@@ -1,9 +1,53 @@
-const {shelterSchema} = require('./validateSchema.js');
+const {shelterSchema,rescueSchema,reviewSchema,adoptionSchema} = require('./validateSchema.js');
 const ExpressError=require('./utils/ExpressError.js');
 const User=require('./models/users.js');
 const Shelter=require('./models/shelters.js');
 const Review=require('./models/reviews.js');
 const Rescue=require('./models/rescue.js')
+
+module.exports.validateShelter = (req, res, next) => {
+    const { error } = shelterSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    }
+    else{
+        next();
+    }
+}
+
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    }
+    else{
+        next();
+    }
+}
+
+module.exports.validateAdoption = (req, res, next) => {
+    const { error } = adoptionSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    }
+    else{
+        next();
+    }
+}
+
+module.exports.validateRescue = (req, res, next) => {
+    const { error } = rescueSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    }
+    else{
+        next();
+    }
+}
 
 module.exports.isLoggedIn = (req,res,next)=>{
     if(!req.session.user){

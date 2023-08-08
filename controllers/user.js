@@ -10,7 +10,12 @@ module.exports.renderRegister = (req,res)=>{
 module.exports.createUser = async(req,res)=>{
     const {username,email,password,confPassword} = req.body;
     const findUser = await User.findOne({email: email});
-    if(findUser){
+    const findUserByName = await User.findOne({username: username});
+    if(findUserByName){
+        req.flash('error', 'Username already exists!');
+        res.redirect('/userRegister');
+    }
+    else if(findUser){
         req.flash('error', 'Invalid email!');
         res.redirect('/userRegister');
     }

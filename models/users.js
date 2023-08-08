@@ -4,7 +4,8 @@ const Schema=mongoose.Schema;
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: [true, 'Username cannot be blank!']
+        required: [true, 'Username cannot be blank!'],
+        unique: false
     },
     email: {
         type: String,
@@ -17,4 +18,10 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports=mongoose.model('User', UserSchema);
+const User=mongoose.model('User', UserSchema);
+
+User.collection.createIndexes([
+    {key: {email: 2}, unique: true},
+]);
+
+module.exports=User

@@ -1,3 +1,7 @@
+body{
+    max-width: 100%;
+}
+
 .details{
     height: 100vh;
     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
@@ -287,4 +291,10 @@
 
 .adopt-show-img:hover{
     transform: scale(1.5,1.5);
+}
+
+@media only screen and (max-width: 768px){
+    #main{
+        width: auto;
+    }
 }

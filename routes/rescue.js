@@ -6,12 +6,12 @@ const {storage}=require('../cloudinary');
 const upload=multer({storage});
 const rescues=require('../controllers/rescue');
 const Rescue = require('../models/rescue');
-const {isLoggedIn,isUserNotShelter, isLoggedInAsShelter} = require('../middleware.js');
+const {isLoggedIn,isUserNotShelter, isLoggedInAsShelter,validateRescue} = require('../middleware.js');
 const rescue = require('../models/rescue');
 
 router.route('/post')
     .get(isLoggedIn,isUserNotShelter,rescues.renderRescue)
-    .post(isLoggedIn,isUserNotShelter,upload.array('images'), catchAsync(rescues.addRescue));
+    .post(isLoggedIn,isUserNotShelter,upload.array('images'), validateRescue, catchAsync(rescues.addRescue));
 
 router.route('/animals')
     .get(catchAsync(rescues.showRescues))

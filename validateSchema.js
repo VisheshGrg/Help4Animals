@@ -32,3 +32,32 @@ module.exports.shelterSchema = joi.object({
         description: joi.string().escapeHTML()
     }).required()
 });
+
+module.exports.reviewSchema = joi.object({
+    Review: joi.object({
+        rating: joi.number().required(),
+        body: joi.string().required().escapeHTML()
+    }).required()
+});
+
+module.exports.adoptionSchema = joi.object({
+    Adoptions: joi.object({
+        species: joi.string().required().escapeHTML(),
+        name: joi.string().required().escapeHTML(),
+        age: joi.number().required(),
+        details: joi.string().escapeHTML(),
+        gender: joi.string().required(),
+        location: joi.string().required().escapeHTML()
+    }).required()
+});
+
+module.exports.rescueSchema = joi.object({
+    Rescue: joi.object({
+        species: joi.string().required().escapeHTML(),
+        severe: joi.string().required(),
+        description: joi.string().escapeHTML(),
+        locality: joi.string().required().escapeHTML(),
+        callerContact: joi.string().required().escapeHTML(),
+        identification: joi.string().escapeHTML()
+    })
+});

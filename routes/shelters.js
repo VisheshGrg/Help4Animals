@@ -6,7 +6,7 @@ const Shelter=require('../models/shelters');
 const multer=require('multer');
 const {storage}=require('../cloudinary');
 const upload=multer({storage});
-const {isLoggedIn, isAuthor, isShelter} = require('../middleware.js');
+const {isLoggedIn, isAuthor, isShelter, validateShelter} = require('../middleware.js');
     
 router.route('/')
     .get(catchAsync(shelters.index))
@@ -14,7 +14,7 @@ router.route('/')
 
 router.route('/register')
     .get(isLoggedIn, shelters.renderRegister)
-    .post(upload.array('images'), catchAsync(shelters.createShelter));
+    .post(upload.array('images'), validateShelter, catchAsync(shelters.createShelter));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(shelters.editShelter));
 

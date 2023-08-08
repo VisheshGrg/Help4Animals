@@ -5,7 +5,7 @@ const users=require('../controllers/user');
 const User=require('../models/users');
 const session=require('express-session');
 
-router.route('/userregister')
+router.route('/userRegister')
     .get(users.renderRegister)
     .post(catchAsync(users.createUser));
 

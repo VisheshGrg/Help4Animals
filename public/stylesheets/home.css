@@ -1,3 +1,7 @@
+body{
+    max-width: 100%;
+}
+
 .front{
     height: 100vh;
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
@@ -80,6 +84,7 @@ footer > p{
 }
 
 .shelterCount{
+    font-size: 1rem;
     height: 100vh;
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
     url("https://images.unsplash.com/photo-1504006833117-8886a355efbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fGJhY2tncm91bmQlMjBpbWFnZXMlMjBhbmltYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60");
@@ -87,15 +92,17 @@ footer > p{
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.items{
-    display: flex;
+.shelterCount > .items{
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    text-align: center;
 }
 
 .text{
@@ -107,10 +114,13 @@ footer > p{
 .count{
     font-size: 3rem;
     background-color: rgba(234, 172, 139, 0.5);
+    width: auto;
     padding: 20px 120px;
     border-radius: 20px;
     color: white;
     font-weight: 600;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .count::after{
@@ -152,6 +162,12 @@ footer > p{
     .front-title{
         font-size: 3rem;
     }
+    .text{
+        font-size: 3rem;
+    }
+    .count{
+        font-size: 2rem;
+    }
 }
 
 @media only screen and (max-width: 450px){
@@ -181,6 +197,12 @@ footer > p{
 @media only screen and (max-width: 290px){
     .card-content{
         padding: 20px;
+    }
+    .text{
+        font-size: 1.5rem;
+    }
+    .count{
+        font-size: 1rem;
     }
 }
 @media only screen and (max-width: 200px){
