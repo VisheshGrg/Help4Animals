@@ -1,16 +1,21 @@
 <header class="sticky-top" id="nav">
     <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Help4Animals</a>
+          <a class="navbar-brand" href="/">Help4Animals</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link" href="/">About us</a>
-              <a class="nav-link" href="/">Contact</a>
-              <a class="nav-link" href="/">What we do?</a>
+              <a class="nav-link" href="/about">About us</a>
+              <a class="nav-link" href="/contact">Contact</a>
+              <% if(!isShelter && currentUser) {%>
+                  <a class="nav-link" href="/adoptions/index">Adoptions</a>
+              <% }else if(currentUser) {%>
+                  <a class="nav-link" href="/rescue/animals">Rescue</a>
+              <% } %>
+              <a class="nav-link" href="/shelters">Shelters</a>
             </div>
             <div class="navbar-nav ms-auto">
               <% if(!currentUser) {%>

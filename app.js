@@ -99,6 +99,12 @@ app.use('/shelters',shelterRoute);
 app.use('/shelters/:id/reviews', reviewRoute);
 app.use('/rescue',rescueRoute);
 app.use('/adoptions', adoptionRoute);
+app.get('/about', (req,res)=>{
+    res.render('abouts/about');
+})
+app.get('/contact', (req,res)=>{
+    res.render('abouts/contact');
+})
 
 app.all('*', (req,res,next)=>{
     next(new ExpressError('Page not found!', 404));
