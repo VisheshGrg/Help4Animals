@@ -16,13 +16,14 @@ const adoptionRoute=require('./routes/adoption');
 const ExpressError=require('./utils/ExpressError');
 const session=require('express-session');
 const MongoStore=require('connect-mongo');
-const dbUrl='mongodb://127.0.0.1:27017/Help4Animals';
 const flash=require('connect-flash');
 const helmet=require('helmet');
 const catchAsync = require('./utils/catchAsync.js');
 const method_override=require('method-override');
 const User=require('./models/users');
 const Shelter=require('./models/shelters');
+// const dbUrl='mongodb://127.0.0.1:27017/Help4Animals';
+const dbUrl = process.env.DB_URL;
 
 mongoose.set('strictQuery',false);
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -112,10 +113,12 @@ app.all('*', (req,res,next)=>{
 
 app.use((err,req,res,next)=>{
     const {status=500} = err;
-    if (!err.message) err.message = 'Something went wrong!';
+    if (!err.message) err.message = 'Sorry, Something went wrong!';
     res.status(status).render('errors',{err});
 });
 
-app.listen(3000, ()=>{
-    console.log('Listening on port 3000!');
+const port = process.env.PORT || 3000;
+
+app.listen(port, ()=>{
+    console.log(`Listening on port ${port}!`);
 })
