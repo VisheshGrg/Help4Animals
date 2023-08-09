@@ -12,7 +12,8 @@
                     <span class="btn btn-sm btn-success">Rescued</span>
                 <% } %>
             </div>
-            <p class="severe font-small dark-grey">Severity:  <span style="<%= rescue.severe>3 ? 'border: 2px solid rgba(157, 2, 8);' : 'border: 2px solid rgba(255, 190, 11);' %>"><%= rescue.severe %></span></p>
+            <!-- style="<%= rescue.severe>3 ? 'border: 2px solid rgba(157, 2, 8);' : 'border: 2px solid rgba(255, 190, 11);' %>" -->
+            <p class="severe font-small dark-grey">Severity:  <span><%= rescue.severe %></span></p>
             <p class="locality dark-grey font-small">Location: <%= rescue.locality %></p>
             <p class="description light-grey" id="animals-details-des"><%= rescue.description %></p>
             <p class="identification dark-grey font-small">Identification: <%= rescue.identification %></p>
