@@ -1,6 +1,6 @@
 <% layout('layout/boilerplate') %>
 
-<div class="row mt-5">
+<div class="row mt-5 margin-left-right">
     <h1 class="text-center mb-3">Post for Adoption</h1>
     <div class="col-md-6 offset-md-3 mb-5">
         <form action="/adoptions/post" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
@@ -32,7 +32,7 @@
             </div>
             <div class="mb-4">
                 <label for="images" class="form-label">Add images: </label>
-                <input type="file" class="form-control" name="images" id="images" multiple>
+                <input type="file" class="form-control" name="images" id="images" max="4" multiple>
             </div>
             <div class="mb-4 text-center">
                 <button class="btn btn-primary">Submit</button>

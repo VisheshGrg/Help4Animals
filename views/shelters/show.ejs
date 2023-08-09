@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="/stylesheets/stars.css">
 
 <div>
-    <div class="row" style="margin: 50px;">
-        <div class="col-6">
+    <div class="row" id="shelter-show">
+        <div class="col-6" id="shelter-show-colA">
             <div id="shelterCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <% if(shelter.images.length>=1) {%>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" id="shelter-show-colB">
             <% if( currentUser ) {%>
                 <h3>Leave a review!</h3>
                 <form action="/shelters/<%= shelter._id %>/reviews" method="POST" class="mb-4 validated-form" novalidate>

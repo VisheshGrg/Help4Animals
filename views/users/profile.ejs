@@ -6,18 +6,19 @@
         <p><%= user.email %></p>
     </div>
     <h4 style="margin-bottom: 20px; color: slategray;">Your Shelters</h4>
-    <div class="border border-dark" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+    
+    <div style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; ">
         <% for(let shelter of userShelters) {%>
-            <div class="card mb-5" style="width:1000px; height: auto; text-align: center;">
-                <div class="row">
-                    <div class="col-sm-4">
+            <div class="card mb-5" style="height: auto; text-align: center;">
+                <div class="row" id="profile-shelter">
+                    <div class="col-sm-4" id="profile-shelter-colA">
                         <% if(shelter.images.length>=1){ %>
                             <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= shelter.images[0].url %>" alt="shelter image">
                         <% } else { %>
                             <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
                         <% } %>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8" id="profile-shelter-colB">
                         <div class="card-body">
                             <div class="card-header" style="margin-bottom: 10px;">
                                 <h3 class="card-title" style="margin-bottom: 10px;"><%= shelter.sheltername %></h5>
@@ -44,20 +45,20 @@
     </div>
 
     <h4 style="margin-top: 50px; margin-bottom: 20px; color: slategray;">Your submissions for injured animals</h4>
-    <div class="border border-dark" style="padding: 20px; display: flex; flex-direction: column; align-items: center;  border-radius: 10px; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+    <div style="padding: 20px; display: flex; flex-direction: column; align-items: center;">
         <% for(const [i,rescue] of userRescues.entries()) {%>
             <% if(i<2) {%>
-                <div class="card mb-5" style="height: auto; width: 1000px; text-align: center;">
-                    <div class="row">
-                        <div class="col-sm-4">
+                <div class="card mb-5" style="height: auto; text-align: center;">
+                    <div class="row" id="profile-rescue">
+                        <div class="col-sm-4" id="profile-rescue-colA">
                             <% if(rescue.images.length>=1){ %>
                                 <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="<%= rescue.images[0].url %>" alt="animal">
                             <% } else { %>
                                 <img class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; max-height: 330px;" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" alt="no image">
                             <% } %>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="card-body" style="height: 100%;">
+                        <div class="col-sm-8" id="profile-rescue-colB">
+                            <div class="card-body">
                                 <div class="card-header">
                                     <h3 class="card-title" style="margin-bottom: 15px; display: inline; margin-right: 10px;">Species: <%= rescue.species %></h5>
                                     <% if(rescue.active){ %>

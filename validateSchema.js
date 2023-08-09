@@ -24,13 +24,13 @@ const extension = (joi) => ({
 const joi = BaseJoi.extend(extension);
 
 module.exports.shelterSchema = joi.object({
-    shelter: joi.object({
-        sheltername: joi.string().required().escapeHTML(),
-        email: joi.string().required().escapeHTML(),
-        contact: joi.string().required().escapeHTML(),
-        location: joi.string().required().escapeHTML(),
-        description: joi.string().escapeHTML()
-    }).required()
+    sheltername: joi.string().required(),
+    email: joi.string().required().escapeHTML(),
+    mobnumber: joi.string().required().escapeHTML(),
+    location: joi.string().required().escapeHTML(),
+    description: joi.string().escapeHTML(),
+    password: joi.string().required().escapeHTML(),
+    confPassword: joi.string().required().escapeHTML()
 });
 
 module.exports.reviewSchema = joi.object({
@@ -41,23 +41,18 @@ module.exports.reviewSchema = joi.object({
 });
 
 module.exports.adoptionSchema = joi.object({
-    Adoptions: joi.object({
-        species: joi.string().required().escapeHTML(),
-        name: joi.string().required().escapeHTML(),
-        age: joi.number().required(),
-        details: joi.string().escapeHTML(),
-        gender: joi.string().required(),
-        location: joi.string().required().escapeHTML()
-    }).required()
+    species: joi.string().required().escapeHTML(),
+    name: joi.string().required().escapeHTML(),
+    age: joi.number().required(),
+    details: joi.string().escapeHTML(),
+    gender: joi.string().required()
 });
 
 module.exports.rescueSchema = joi.object({
-    Rescue: joi.object({
-        species: joi.string().required().escapeHTML(),
-        severe: joi.string().required(),
-        description: joi.string().escapeHTML(),
-        locality: joi.string().required().escapeHTML(),
-        callerContact: joi.string().required().escapeHTML(),
-        identification: joi.string().escapeHTML()
-    })
+    species: joi.string().required().escapeHTML(),
+    severe: joi.string().required(),
+    description: joi.string().escapeHTML(),
+    locality: joi.string().required().escapeHTML(),
+    callerContact: joi.string().required().escapeHTML(),
+    identification: joi.string().escapeHTML()
 });

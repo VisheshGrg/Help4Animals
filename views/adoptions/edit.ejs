@@ -1,6 +1,6 @@
 <% layout('layout/boilerplate') %>
 
-<div class="row mt-5">
+<div class="row mt-5 margin-left-right">
     <h1 class="text-center mb-3">Edit details</h1>
     <div class="col-md-6 offset-md-3 mb-5">
         <form action="/adoptions/<%= adoption._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
@@ -50,8 +50,8 @@
             </div>
             <div class="mb-4 text-center">
                 <button class="btn btn-primary">Submit</button>
+                <a class="btn btn-danger" href="/adoptions/<%= adoption._id %>">Cancel</a>
             </div>
         </form>
-        <a class="btn btn-sm btn-danger" href="/adoptions/<%= adoption._id %>">Cancel</a>
     </div>
 </div>
